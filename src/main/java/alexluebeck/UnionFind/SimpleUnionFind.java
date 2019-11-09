@@ -6,8 +6,10 @@ import java.util.HashSet;
 public class SimpleUnionFind implements UnionFind {
 	private ArrayList<Integer> inWhichSet;
 	private ArrayList<HashSet<Integer>> sets;
+	private int numOfSets;
 
 	public SimpleUnionFind(int size) {
+		numOfSets = size;
 		sets = new ArrayList<HashSet<Integer>>(size);
 		inWhichSet = new ArrayList<Integer>(size);
 		for (int i = 0; i < size; i++) {
@@ -26,6 +28,10 @@ public class SimpleUnionFind implements UnionFind {
 		int size1 = sets.get(inWhichSet.get(y)).size();
 		int size2 = sets.get(inWhichSet.get(z)).size();
 
+		if (inWhichSet.get(y) != inWhichSet.get(z)) {
+			numOfSets--;
+		}
+
 		if (size1 >= size2) {
 			HashSet<Integer> source = sets.get(inWhichSet.get(z));
 			HashSet<Integer> dest = sets.get(inWhichSet.get(y));
@@ -43,6 +49,10 @@ public class SimpleUnionFind implements UnionFind {
 			}
 			source.clear();
 		}
+	}
+
+	public int getNumberOfNonEmptySets() {
+		return this.numOfSets;
 	}
 
 }
